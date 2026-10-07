@@ -20,6 +20,9 @@ export const displayDate = (epoch: number, format: 'date' | 'time' | 'datetime')
     month = date.getMonth() + 1;
     yearFull = date.getFullYear();
     day = date.getDate();
+    // include leading '0' when less than 10
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
   }
   // if the format includes "time" get time data
   if (format.includes('time')) {
@@ -38,8 +41,8 @@ export const displayDate = (epoch: number, format: 'date' | 'time' | 'datetime')
   // based on format option, return the formatted date
   switch (format) {
     case 'date':
-      // MM/DD/YYYY
-      formattedDate = `${month}/${day}/${yearFull}`;
+      // YYYY-MM-DD (ISO 8601)
+      formattedDate = `${yearFull}-${month}-${day}`;
       break;
 
     case 'time':
@@ -48,8 +51,8 @@ export const displayDate = (epoch: number, format: 'date' | 'time' | 'datetime')
       break;
 
     case 'datetime':
-      // MM/DD/YYYY @ 00:00:00 AM/PM
-      formattedDate = `${month}/${day}/${yearFull} @ ${hours}:${minutes}:${seconds} ${ampm}`;
+      // YYYY-MM-DD @ 00:00:00 AM/PM
+      formattedDate = `${yearFull}-${month}-${day} @ ${hours}:${minutes}:${seconds} ${ampm}`;
       break;
 
     default:

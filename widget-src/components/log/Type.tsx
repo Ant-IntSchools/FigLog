@@ -9,9 +9,10 @@ const { AutoLayout, Text, SVG } = widget;
 interface TypeProps {
   type: ChangeType;
   isActive?: boolean;
+  version?: string;
 }
 
-export const Type = ({ type, isActive = false }: TypeProps) => {
+export const Type = ({ type, isActive = false, version }: TypeProps) => {
   let txColor = COLOR.white;
   let bgColor = COLOR.black;
   let showStroke = false;
@@ -47,6 +48,10 @@ export const Type = ({ type, isActive = false }: TypeProps) => {
     case 'removed':
       bgColor = COLOR.greyDark;
       displayName = 'Removed';
+      break;
+    case 'version':
+      bgColor = COLOR.teal;
+      displayName = version ? `Version ${version}` : 'Version';
       break;
     default:
       // other

@@ -42,7 +42,7 @@ We hope FigLog becomes a useful tool for you as a way of documenting the evoluti
 - 👫  Multiplayer collaboration with optional avatars
 - 🗓️  Automatic date capture and handling **(Now Editable)**
 - 💅  Multiple status types to define stages
-- 🏷️  7 log types for easier organization
+- 🏷️  8 log types for easier organization
 - 🔗  26 link types with automatic branding support
 - 🔒  Enhanced security for added control **(New!)**
 

@@ -73,6 +73,7 @@ export const COLOR = {
   purple: '#7F2982',
   red: '#C34C4E',
   tan: '#EBE5DA',
+  teal: '#2A9D8F',
   white: '#FFFFFF',
 };
 

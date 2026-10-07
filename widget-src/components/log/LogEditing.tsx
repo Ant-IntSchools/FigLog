@@ -1,5 +1,5 @@
 import { ChangeLog, ChangeLogState } from '../../types/ChangeLog';
-import { COLOR, FONT, GAP, PADDING } from '../../utilities/Styles';
+import { COLOR, FONT, GAP, PADDING, SPACE } from '../../utilities/Styles';
 import { DateRangeForm } from './DateRangeForm';
 import { Button } from '../Button';
 import { InputField } from '../InputField';
@@ -89,6 +89,26 @@ export const ChangeLogEditing = ({
             >
               <Type type={!!changeLog.state?.updates?.type ? changeLog.state?.updates?.type : changeLog.type} />
             </AutoLayout>
+            {(changeLog.state?.updates?.type || changeLog.type) === 'version' && (
+              <InputField
+                name="Editable Version"
+                placeholder="1.0.0"
+                value={changeLog.state?.updates?.version || ''}
+                width={SPACE.md}
+                behavior="truncate"
+                fontWeight={FONT.weight.bold}
+                letterSpacing={FONT.letterSpacing.sm}
+                action={val => {
+                  updateChangeState({
+                    ...changeLog.state,
+                    updates: {
+                      ...changeLog.state?.updates,
+                      version: val,
+                    },
+                  });
+                }}
+              />
+            )}
           </>
         )}
         <Text
@@ -144,6 +164,8 @@ export const ChangeLogEditing = ({
                 ) {
                   const saveCreatedDate = changeLog.state?.updates?.createdDate || changeLog.createdDate;
                   const saveType = changeLog.state?.updates?.type || changeLog.type;
+                  // only keep a version number on version logs
+                  const saveVersion = saveType === 'version' ? changeLog.state?.updates?.version || '' : '';
                   const saveChange = changeLog.state?.updates?.change || '';
                   const saveLinks =
                     changeLog.links && changeLog.state?.updates?.links
@@ -154,6 +176,7 @@ export const ChangeLogEditing = ({
                     createdDate: saveCreatedDate,
                     editedDate: Date.now(),
                     type: saveType,
+                    version: saveVersion,
                     change: saveChange,
                     links: saveLinks,
                     editCount: ++changeLog.editCount,
@@ -200,6 +223,7 @@ export const ChangeLogEditing = ({
                         key: '',
                       },
                       type: changeLog.type,
+                      version: changeLog.version,
                       change: changeLog.change,
                       linkFormError: { label: false, url: false },
                     },

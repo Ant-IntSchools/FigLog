@@ -7,6 +7,7 @@ export const ChangeTypes = [
   'deprecated',
   'removed',
   'breaking',
+  'version',
   'other',
 ] as const;
 

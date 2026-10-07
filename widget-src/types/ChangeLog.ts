@@ -5,6 +5,7 @@ export interface ChangeLog {
   createdDate: number;
   editedDate: number;
   type: ChangeType;
+  version?: string;
   user: User | null;
   change: string;
   editCount: number;
@@ -26,6 +27,7 @@ export interface ChangeLogState {
     link?: LinkType;
     linkFormError?: { label: boolean; url: boolean };
     type?: ChangeType;
+    version?: string;
     change?: string;
   };
 }

@@ -35,9 +35,9 @@ export const DateRangeForm = ({ changeLog, timestamp, updateChangeState }: DateR
           yyyy = curTimestamp.getFullYear().toString();
           break;
         default:
-          mm = tmpDateStr.split('/')[0];
-          dd = tmpDateStr.split('/')[1];
-          yyyy = tmpDateStr.split('/')[2];
+          yyyy = tmpDateStr.split('-')[0];
+          mm = tmpDateStr.split('-')[1];
+          dd = tmpDateStr.split('-')[2];
       }
     }
     if (!(!!hour || !!min || !!sec)) {
@@ -63,21 +63,23 @@ export const DateRangeForm = ({ changeLog, timestamp, updateChangeState }: DateR
       }
     }
 
-    let date = `${yyyy}-${mm}-${dd}T${hour}:${min}:${sec}`;
+    // include leading '0' so the string is valid ISO 8601
+    const pad = (n?: string) => (n !== undefined && n.length < 2 ? '0' + n : n);
+    let date = `${yyyy}-${pad(mm)}-${pad(dd)}T${pad(hour)}:${pad(min)}:${pad(sec)}`;
     return Date.parse(date);
   };
 
   const validDate = (dateStr: string): number | undefined => {
-    const dFormat = RegExp(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/g);
+    const dFormat = RegExp(/^(\d{4})-(\d{1,2})-(\d{1,2})$/g);
     const correctFormat = dFormat.test(dateStr);
     if (!correctFormat) {
       return undefined;
     }
 
-    const dateParts = dateStr.split('/');
-    const month = dateParts[0];
-    const day = dateParts[1];
-    const year = dateParts[2];
+    const dateParts = dateStr.split('-');
+    const year = dateParts[0];
+    const month = dateParts[1];
+    const day = dateParts[2];
     const exists = isExists(parseInt(year), parseInt(month) - 1, parseInt(day));
     if (!exists) {
       return undefined;
@@ -130,7 +132,7 @@ export const DateRangeForm = ({ changeLog, timestamp, updateChangeState }: DateR
         textCase="upper"
         isAbsolutePos={true}
         hasError={!!changeLog.state?.updates?.createdDateTmp?.date.er}
-        errorMessage="Enter past date (MM/DD/YYYY)."
+        errorMessage="Enter past date (YYYY-MM-DD)."
         errorPosition="right"
         action={date => {
           const newCreated = validDate(date);

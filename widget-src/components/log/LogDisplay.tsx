@@ -55,7 +55,9 @@ export const ChangeLogDisplay = ({
         width="fill-parent"
         verticalAlignItems="center"
       >
-        {showTypes && changeLog.type !== ('none' || 'added') && <Type type={changeLog.type} />}
+        {showTypes && changeLog.type !== ('none' || 'added') && (
+          <Type type={changeLog.type} version={changeLog.version} />
+        )}
         <Text
           name="Name"
           fill={COLOR.black}
@@ -131,6 +133,7 @@ export const ChangeLogDisplay = ({
                       key: changeLog.state?.updates?.link?.key ? changeLog.state?.updates?.link?.key : '',
                     },
                     type: changeLog.state?.updates?.type ? changeLog.state?.updates?.type : changeLog.type,
+                    version: changeLog.state?.updates?.version ? changeLog.state?.updates?.version : changeLog.version,
                     change: changeLog.state?.updates?.change ? changeLog.state?.updates?.change : changeLog.change,
                     linkFormError: {
                       label: changeLog.state?.updates?.linkFormError?.label
